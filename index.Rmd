@@ -26,7 +26,7 @@ library(plotly)
 
 ```
 
-```{r crosstalk}
+```{r crosstalk, include=FALSE}
 point<- st_read("C:\\Users\\rebec\\Desktop\\Capstone_Final\\str8_final.gpkg", layer = "xrf_mergedgis")
 
 str8_mergedphase <- st_read("C:\\Users\\rebec\\Desktop\\Capstone_Final\\str8_final.gpkg", layer = "merge_phaseac")
@@ -94,8 +94,8 @@ The later midden phasing is primarily based on the sequence of deposits and alte
     
 ```{r}
 
-
-bscols(d,dt)
+d
+#bscols(d,dt)
 
 
 ```
