@@ -1,0 +1,153 @@
+---
+title: "Capstone 2023: Ness of Brodgar"
+output: 
+  flexdashboard::flex_dashboard:
+    theme:
+     version: 4
+     bootswatch: lux
+    orientation: rows
+    vertical_layout: scroll
+    storyboard: true
+    navbar:
+      - { title: "Str 8 Site", href: "https://www.nessofbrodgar.co.uk/about/the-structures/structure-eight/", align: right }
+    source_code: embed
+    output_dir: docs
+---
+
+```{r setup, include=FALSE}
+
+library(flexdashboard)
+library(crosstalk)
+library(DT)
+library(sf)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+
+```
+
+```{r crosstalk}
+point<- st_read("C:\\Users\\rebec\\Desktop\\Capstone_Final\\str8_final.gpkg", layer = "xrf_mergedgis")
+
+str8_mergedphase <- st_read("C:\\Users\\rebec\\Desktop\\Capstone_Final\\str8_final.gpkg", layer = "merge_phaseac")
+
+
+point <- point |>
+  mutate(id = paste( 1:n()))
+
+point$xy_group <- paste(point$xcoord, point$ycoord, sep = ",")
+  
+
+
+point_shared <- SharedData$new(point,key= ~point$xy_group)
+
+
+p <- ggplot() +
+  geom_sf(data = str8_mergedphase, alpha = 0.5, aes(color = Linetype))+
+  geom_sf(data = point_shared,aes(text = paste0("Context: ", Context, "\n", "Sample: ", Sample, "\n", "Square: ", Square)), alpha = 0.4)+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),axis.ticks = element_blank(),axis.text.x=element_blank(),axis.text.y=element_blank(),panel.background = element_blank())
+
+
+
+
+ d<- ggplotly(p,tooltip = "text", ) |> ##adding the text in the tooltip
+  style(hoverlabel = list(bgcolor = "white"), hoveron = "fill")
+ dt <-datatable(point_shared)
+  
+```
+
+
+
+
+Graphs and Data{data-navmenu="Structure 8 Content"}
+=====================================  
+
+{height=350}
+--------------------
+
+### Structure 8 Phasing
+
+#### Phasing
+
+<span style="background-color: orange">Marked text</span>
+
+* 8A: Original build (3100)
+* 8B: Primary Use (3100)
+* 8C: Secondary alterations (2850)
+* 8D: Secondary Use (2850)
+* 8E: Collapse of North end and half roof with abandonment (2850)
+* 8F: infill (2400)
+* 8G: later robber cuts and fills
+                  
+
+### Central Paved Area
+
+#### Central Standing Stone
+
+The later midden phasing is primarily based on the sequence of deposits and alterations observed over the paved area near orthostat 3682, commonly referred to as the 'central standing stone.' These changes are closely related to Structures One, Eight, Twelve, and Twenty-Nine, which create a cluster around this expansive open-air paved area. It appears that this particular space played a significant role as the focal point of the Neolithic complex, at least during one phase of its history.
+
+
+
+
+-------------------------------
+### Structure 8 
+    
+```{r}
+
+
+bscols(d,dt)
+
+
+```
+   
+{data-height=650}
+-------------------------------
+### Reactive Data Table from Plot
+
+
+
+
+Mitten Phasing {data-navmenu="Structure 8 Content"}
+=====================================     
+
+### Chart 2
+    
+```{r}
+```
+
+
+How to use Dashboard {data-navmenu="Structure 8 Content"}
+=====================================     
+
+### Chart 2
+    
+```{r}
+```
+
+What is Ness Of Brodgar {data-navmenu="Structure 8 Content"}
+=====================================     
+#### What is Ness of Brodgar?
+The Ness of Brodgar is an archaeological site located on the Orkney Islands in Scotland. It is a significant Neolithic complex consisting of a large stone settlement and a ceremonial enclosure. The site, dating back over 5,000 years, offers valuable insights into the lives and culture of the ancient inhabitants of the region.
+
+Archaeologists have been uncovering well-preserved structures and various artifacts at the Ness of Brodgar, including pottery, tools, and artwork. Ongoing excavations at the site contribute to our understanding of the Neolithic period and provide clues about the religious, social, and economic practices of its ancient inhabitants.
+
+#### What it means to me
+
+During my studies, we were taught  let the data tell its story. I had the incredible opportunity to do just that this summer. I was fortunate to be selected for a research grant, where I assisted a Willamette professor with data management and XRF data processing in Scotland. It was the perfect chance for me to not only gain hands-on experience in data processing but also to delve into the world of archaeology data and its components.
+
+Upon arriving in Orkney, Scotland, I was warmly welcomed into a bustling community of individuals at the archaeological site. This site wasn't just a place where relics were excavated; it was a living, breathing community filled with passionate people from all over the globe. Volunteers eagerly contributed their time, united by a shared dedication to preserving our cultural heritage. This experience made me realize that archaeology is about much more than dusty artifacts; it's about understanding our past and its impact on our present and future.
+
+The data we collected and processed told captivating stories about the people who once lived here and the present-day enthusiasts who cherish their heritage. This site was unique in that it's privately funded and maintains full control over its information and studies. This enables open-source accessibility, allowing both the public and specialists to be a part of this ongoing endeavor.
+
+Overall, this summer has been an eye-opening journey, deepening my passion for archaeology and data analysis. Being embraced by such a passionate community has given me a profound sense of belonging and appreciation for our shared history.
+
+Report
+=====================================     
+
+### Chart 2
+
+## Research Question:
+
+    
+```{r}
+```
